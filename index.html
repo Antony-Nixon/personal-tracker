@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827"><meta name="description" content="A simple personal task tracker">
-<link rel="manifest" href="./manifest.json"><link rel="icon" href="./icons/icon-192.png"><link rel="stylesheet" href="./style.css">
+<link rel="manifest" href="./manifest.json"><link rel="icon" href="./icons/icon-192.png"><link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./dashboard.css">
 <title>My Tracker</title>
 </head>
 <body>
@@ -32,6 +32,12 @@
   <div class="calendar-head"><button class="icon" id="prevMonth" aria-label="Previous month">‹</button><strong id="calendarTitle"></strong><button class="icon" id="nextMonth" aria-label="Next month">›</button></div>
   <div class="calendar-grid" id="calendarGrid"></div>
 </section>
+
+<section class="dashboard" aria-labelledby="dashboardTitle">
+  <div class="dashboard-heading"><div><h2 id="dashboardTitle">Progress dashboard</h2><p>Consistency across your tasks and habits.</p></div></div>
+  <div class="dashboard-summary" id="dashboardSummary"></div>
+  <div class="progress-list" id="taskProgress"></div>
+</section>
 </div>
 
 <dialog id="taskDialog"><form class="modal" id="taskForm" method="dialog">
@@ -39,6 +45,7 @@
   <label>Task</label><input id="title" required maxlength="100" placeholder="e.g. Gym">
   <div class="row"><div><label>Date</label><input id="date" type="date" required></div><div><label>Time</label><input id="time" type="time"></div></div>
   <label>Repeat</label><select id="repeat"><option value="none">Does not repeat</option><option value="daily">Every day</option><option value="weekly">Every week</option><option value="monthly">Every month</option></select>
+  <div id="weeklyGoalField" class="goal-field" hidden><label for="weeklyTarget">Weekly session target <span class="optional">(optional)</span></label><input id="weeklyTarget" type="number" min="1" max="7" inputmode="numeric" placeholder="For example, 5"><small>For habits like gym, choose how many sessions you aim to complete each week.</small></div>
   <div class="modal-actions"><button type="button" class="btn" id="cancelBtn">Cancel</button><button class="btn primary">Save task</button></div>
 </form></dialog>
 
