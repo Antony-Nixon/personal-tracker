@@ -254,7 +254,7 @@ function render() {
   list.forEach(t=>renderTask(t,selectedDate,$("tasks")));
   $("syncStatus").textContent=hasNotificationSetup()?"Notifications on":"Local only";
   $("notifyBtn").textContent=hasNotificationSetup()?"Notifications enabled":"Enable notifications";
-  renderCalendar();
+  if (!$("calendarPanel").hidden) renderCalendar();
   renderDashboard();
   renderReviewIfNeeded();
 }
@@ -313,6 +313,7 @@ async function syncServer() {
 $("addBtn").onclick=()=>openEdit();
 $("notifyBtn").onclick=()=>enableNotifications();
 $("todayBtn").onclick=()=>{selectedDate=today();render();};
+$("calendarToggle").onclick=()=>{const panel=$("calendarPanel"),open=panel.hidden;panel.hidden=!open;$("calendarToggle").setAttribute("aria-expanded",String(open));if(open)renderCalendar();};
 $("prevMonth").onclick=()=>{const d=parseDate(selectedDate);d.setMonth(d.getMonth()-1);selectedDate=localDate(new Date(d.getFullYear(),d.getMonth(),1));render();};
 $("nextMonth").onclick=()=>{const d=parseDate(selectedDate);d.setMonth(d.getMonth()+1);selectedDate=localDate(new Date(d.getFullYear(),d.getMonth(),1));render();};
 function clearReviewUrl() {
@@ -328,7 +329,6 @@ $("closeReview").onclick=()=>$("reviewDialog").close();
 $("reviewDialog").addEventListener("close", clearReviewUrl);
 $("cancelBtn").onclick=()=>$("taskDialog").close();
 $("postponeCancel").onclick=()=>$("postponeDialog").close();
-$("taskForm").onsubmit=e=>{e.preventDefault();const id=$("editId").value,d={title:$("title").value.trim(),date:$("date").value,time:$("time").value,repeat:$("repeat").value};if(!d.title)return;if(id)Object.assign(state.tasks.find(t=>t.id===id),d);else state.tasks.push({id:uid(),...d,completed:false,createdAt:new Date().toISOString()});save();$("taskDialog").close();selectedDate=d.date;render();syncServer();toast(id?"Task updated":"Task added");};
 $("repeat").onchange=()=>{$("weeklyGoalField").hidden=$("repeat").value!=="daily";};
 $("taskForm").onsubmit=e=>{e.preventDefault();const id=$("editId").value,repeat=$("repeat").value,weeklyTarget=repeat==="daily"&&$("weeklyTarget").value?Math.max(1,Math.min(7,Number($("weeklyTarget").value))):null,d={title:$("title").value.trim(),date:$("date").value,time:$("time").value,repeat,weeklyTarget};if(!d.title)return;if(id)Object.assign(state.tasks.find(t=>t.id===id),d);else state.tasks.push({id:uid(),...d,completed:false,createdAt:new Date().toISOString()});save();$("taskDialog").close();selectedDate=d.date;render();syncServer();toast(id?"Task updated":"Task added");};
 $("postponeForm").onsubmit=e=>{e.preventDefault();const id=$("postponeId").value,old=$("postponeOldDate").value,t=state.tasks.find(x=>x.id===id);if(!t)return;postponeTask(t,old,$("postponeDate").value,$("postponeTime").value);$("postponeDialog").close();if(new URLSearchParams(location.search).get("review")==="1")showReview(old);};
