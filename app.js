@@ -254,7 +254,8 @@ function render() {
   list.forEach(t=>renderTask(t,selectedDate,$("tasks")));
   $("syncStatus").textContent=hasNotificationSetup()?"Notifications on":"Local only";
   $("notifyBtn").textContent=hasNotificationSetup()?"Notifications enabled":"Enable notifications";
-  if (!$("calendarPanel").hidden) renderCalendar();
+  const calendarPanel = $("calendarPanel");
+  if (!calendarPanel || !calendarPanel.hidden) renderCalendar();
   renderDashboard();
   renderReviewIfNeeded();
 }
@@ -313,7 +314,8 @@ async function syncServer() {
 $("addBtn").onclick=()=>openEdit();
 $("notifyBtn").onclick=()=>enableNotifications();
 $("todayBtn").onclick=()=>{selectedDate=today();render();};
-$("calendarToggle").onclick=()=>{const panel=$("calendarPanel"),open=panel.hidden;panel.hidden=!open;$("calendarToggle").setAttribute("aria-expanded",String(open));if(open)renderCalendar();};
+const calendarToggle=$("calendarToggle");
+if(calendarToggle) calendarToggle.onclick=()=>{const panel=$("calendarPanel");if(!panel)return;const open=panel.hidden;panel.hidden=!open;calendarToggle.setAttribute("aria-expanded",String(open));if(open)renderCalendar();};
 $("prevMonth").onclick=()=>{const d=parseDate(selectedDate);d.setMonth(d.getMonth()-1);selectedDate=localDate(new Date(d.getFullYear(),d.getMonth(),1));render();};
 $("nextMonth").onclick=()=>{const d=parseDate(selectedDate);d.setMonth(d.getMonth()+1);selectedDate=localDate(new Date(d.getFullYear(),d.getMonth(),1));render();};
 function clearReviewUrl() {

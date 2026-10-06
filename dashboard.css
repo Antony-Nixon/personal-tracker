@@ -20,4 +20,9 @@
 .goal-field[hidden]{display:none}
 .goal-field small{display:block;color:var(--muted);font-size:12px;margin-top:6px}
 .optional{color:var(--muted);font-weight:400}
+.calendar-toggle-wrap{display:flex;justify-content:flex-end;margin:16px 2px 0}
+.calendar-toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--text);padding:9px 13px;font:inherit;cursor:pointer}
+.calendar-toggle:hover{background:#f3f4f6}
+.calendar-toggle svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#calendarPanel[hidden]{display:none}
 @media(max-width:500px){.dashboard-summary{gap:6px}.dash-stat{padding:10px 8px}.dash-stat span{font-size:10px}.streak-pill{font-size:11px}}

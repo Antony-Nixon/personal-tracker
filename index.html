@@ -28,7 +28,14 @@
   <div id="tasks"></div>
 </section>
 
-<section class="calendar-card">
+<div class="calendar-toggle-wrap">
+  <button class="calendar-toggle" id="calendarToggle" type="button" aria-expanded="false" aria-controls="calendarPanel">
+    <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M16 3v4M8 3v4M3 10h18"></path></svg>
+    <span>Calendar</span>
+  </button>
+</div>
+
+<section class="calendar-card" id="calendarPanel" hidden>
   <div class="calendar-head"><button class="icon" id="prevMonth" aria-label="Previous month">‹</button><strong id="calendarTitle"></strong><button class="icon" id="nextMonth" aria-label="Next month">›</button></div>
   <div class="calendar-grid" id="calendarGrid"></div>
 </section>
