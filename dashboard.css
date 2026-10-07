@@ -2,20 +2,33 @@
 .dashboard-heading{display:flex;justify-content:space-between;align-items:end;margin:0 2px 12px}
 .dashboard-heading h2{font-size:19px;margin:0}
 .dashboard-heading p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.past-tasks-button{flex:none;font-size:12px;padding:8px 10px}
 .dashboard-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:10px}
 .dash-stat{display:flex;flex-direction:column;gap:2px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;min-width:0}
 .dash-stat strong{font-size:20px;line-height:1.2}
 .dash-stat span{font-size:11px;color:var(--muted)}
 .progress-list{display:grid;gap:8px}
 .progress-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px}
-.progress-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.progress-card-top{display:flex;align-items:center;gap:8px}
 .progress-task-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:15px}
+.progress-card-top .progress-task-name{margin-right:auto}
+.progress-delete{flex:none;padding:4px}
+.progress-delete svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.progress-delete:hover{color:var(--danger);background:#fff0f2;border-radius:9px}
 .streak-pill{flex:none;border-radius:999px;background:#eef2ff;color:#3730a3;padding:5px 9px;font-size:12px;font-weight:700}
 .streak-pill.done-pill{background:#dcfce7;color:#166534}
 .progress-meta{font-size:12px;color:var(--muted);margin:8px 0}
 .progress-track{height:6px;border-radius:999px;background:#e5e7eb;overflow:hidden}
 .progress-fill{height:100%;border-radius:inherit;background:var(--good);transition:width .2s ease}
 .dashboard-empty{border:1px dashed var(--line);border-radius:14px;background:var(--card)}
+.past-tasks-modal{max-height:min(80vh,680px);overflow:auto}
+.past-tasks-modal .review-head{margin-bottom:12px}
+.past-tasks-modal .review-head h2{margin:0}
+.past-tasks-modal .review-head p{font-size:13px}
+.past-task{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border:1px solid var(--line);border-radius:12px;margin:8px 0;background:var(--card)}
+.past-task-detail{display:grid;gap:4px;min-width:0}
+.past-task-detail strong{overflow-wrap:anywhere}
+.past-task-detail span{font-size:12px;color:var(--muted)}
 .goal-field{margin-top:12px}
 .goal-field[hidden]{display:none}
 .goal-field small{display:block;color:var(--muted);font-size:12px;margin-top:6px}

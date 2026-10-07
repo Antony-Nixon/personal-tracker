@@ -41,11 +41,16 @@
 </section>
 
 <section class="dashboard" aria-labelledby="dashboardTitle">
-  <div class="dashboard-heading"><div><h2 id="dashboardTitle">Progress dashboard</h2><p>Consistency across your tasks and habits.</p></div></div>
+  <div class="dashboard-heading"><div><h2 id="dashboardTitle">Progress dashboard</h2><p>Consistency across your recurring habits.</p></div><button class="btn past-tasks-button" id="pastTasksBtn" type="button">Past tasks</button></div>
   <div class="dashboard-summary" id="dashboardSummary"></div>
   <div class="progress-list" id="taskProgress"></div>
 </section>
 </div>
+
+<dialog id="pastTasksDialog"><div class="modal past-tasks-modal">
+  <div class="review-head"><div><h2>Past tasks</h2><p class="muted">One-time tasks scheduled before today.</p></div><button class="icon" id="closePastTasks" type="button" aria-label="Close past tasks">×</button></div>
+  <div id="pastTasksList"></div>
+</div></dialog>
 
 <dialog id="taskDialog"><form class="modal" id="taskForm" method="dialog">
   <h2 id="modalTitle">Add task</h2><input type="hidden" id="editId">

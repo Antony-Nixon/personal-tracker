@@ -166,8 +166,7 @@ function renderCalendar() {
   }
 }
 function renderDashboard() {
-  const tasks = [...state.tasks].sort((a, b) => a.title.localeCompare(b.title));
-  const recurring = tasks.filter(t => t.repeat !== "none");
+  const recurring = state.tasks.filter(t => t.repeat !== "none").sort((a, b) => a.title.localeCompare(b.title));
   const dates = weekDates(weekStart(today()));
   const sessions = recurring.reduce((sum, task) => sum + doneCount(task, dates), 0);
   const activeStreaks = recurring.filter(task => task.repeat === "daily" && Number(task.weeklyTarget) > 0
@@ -178,19 +177,14 @@ function renderDashboard() {
   $("dashboardSummary").innerHTML = `<div class="dash-stat"><strong>${recurring.length}</strong><span>recurring habits</span></div><div class="dash-stat"><strong>${sessions}</strong><span>sessions this week</span></div><div class="dash-stat"><strong>${activeStreaks}</strong><span>active streaks</span></div>`;
   const list = $("taskProgress");
   list.innerHTML = "";
-  if (!tasks.length) {
-    list.innerHTML = '<div class="empty dashboard-empty">Add a task to start building your progress history.</div>';
+  if (!recurring.length) {
+    list.innerHTML = '<div class="empty dashboard-empty">Your recurring habits will appear here. One-time tasks stay out of progress tracking.</div>';
     return;
   }
 
-  for (const task of tasks) {
+  for (const task of recurring) {
     let streakText, periodText, ratio, count, total;
-    if (task.repeat === "none") {
-      const complete = isDone(task, task.date);
-      streakText = complete ? "Done" : "One-time";
-      periodText = complete ? "Completed" : `Scheduled ${formatLong(task.date)}`;
-      ratio = complete ? 1 : 0;
-    } else if (task.repeat === "daily" && Number(task.weeklyTarget) > 0) {
+    if (task.repeat === "daily" && Number(task.weeklyTarget) > 0) {
       const target = Math.max(1, Math.min(7, Number(task.weeklyTarget)));
       count = doneCount(task, dates);
       total = target;
@@ -228,9 +222,16 @@ function renderDashboard() {
     name.className = "progress-task-name";
     name.textContent = task.title;
     const streak = document.createElement("span");
-    streak.className = `streak-pill${streakText === "Done" ? " done-pill" : ""}`;
+    streak.className = "streak-pill";
     streak.textContent = streakText;
-    top.append(name, streak);
+    const remove = document.createElement("button");
+    remove.className = "icon progress-delete";
+    remove.type = "button";
+    remove.title = "Delete this recurring task and its history";
+    remove.setAttribute("aria-label", `Delete ${task.title} and its history`);
+    remove.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6m4-6v6M6 7l1 14h10l1-14M9 7V4h6v3"></path></svg>';
+    remove.onclick = () => deleteTask(task);
+    top.append(name, streak, remove);
     const meta = document.createElement("div");
     meta.className = "progress-meta";
     meta.textContent = periodText;
@@ -242,6 +243,37 @@ function renderDashboard() {
     bar.append(fill);
     card.append(top, meta, bar);
     list.append(card);
+  }
+}
+function renderPastTasks() {
+  const list = $("pastTasksList");
+  const past = state.tasks
+    .filter(task => task.repeat === "none" && task.date < today())
+    .sort((a, b) => b.date.localeCompare(a.date) || sortTasks(a, b));
+  list.innerHTML = "";
+  if (!past.length) {
+    list.innerHTML = '<div class="empty">No past one-time tasks.</div>';
+    return;
+  }
+  for (const task of past) {
+    const row = document.createElement("article");
+    row.className = "past-task";
+    const detail = document.createElement("div");
+    detail.className = "past-task-detail";
+    const title = document.createElement("strong");
+    title.textContent = task.title;
+    const date = document.createElement("span");
+    date.textContent = `${formatLong(task.date)} · ${isDone(task, task.date) ? "Completed" : "Not completed"}`;
+    detail.append(title, date);
+    const remove = document.createElement("button");
+    remove.className = "icon delete-task";
+    remove.type = "button";
+    remove.title = "Delete past task permanently";
+    remove.setAttribute("aria-label", `Delete ${task.title} permanently`);
+    remove.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6m4-6v6M6 7l1 14h10l1-14M9 7V4h6v3"></path></svg>';
+    remove.onclick = () => { deleteTask(task); renderPastTasks(); };
+    row.append(detail, remove);
+    list.append(row);
   }
 }
 function render() {
@@ -315,6 +347,8 @@ async function syncServer() {
 $("addBtn").onclick=()=>openEdit();
 $("notifyBtn").onclick=()=>enableNotifications();
 $("todayBtn").onclick=()=>{selectedDate=today();render();};
+$("pastTasksBtn").onclick=()=>{renderPastTasks();$("pastTasksDialog").showModal();};
+$("closePastTasks").onclick=()=>$("pastTasksDialog").close();
 const calendarToggle=$("calendarToggle");
 if(calendarToggle) calendarToggle.onclick=()=>{const panel=$("calendarPanel");if(!panel)return;const open=panel.hidden;panel.hidden=!open;calendarToggle.setAttribute("aria-expanded",String(open));if(open)renderCalendar();};
 $("prevMonth").onclick=()=>{const d=parseDate(selectedDate);d.setMonth(d.getMonth()-1);selectedDate=localDate(new Date(d.getFullYear(),d.getMonth(),1));render();};
