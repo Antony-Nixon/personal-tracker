@@ -148,10 +148,11 @@ function postponeTask(t, oldDate, newDate, newTime) {
 function renderTask(t, date, container, review=false) {
   const el=document.createElement("div"); el.className="task";
   const status = t.skipped ? "skipped" : t.done ? "done" : "";
-  el.innerHTML = `<button class="check ${status}" aria-label="Mark task complete"></button><div class="task-main"><div class="task-title ${t.done?"done-text":""}">${esc(t.title)}</div><div class="meta">${formatTime(t.time)}${t.repeat!=="none"?" · "+repeatLabel(t.repeat):""}${t.skipped?" · skipped today":""}</div></div><div class="actions"><button class="icon postpone" title="Postpone">→</button><button class="icon edit" title="Edit">⋮</button></div>`;
+  el.innerHTML = `<button class="check ${status}" aria-label="Mark task complete"></button><div class="task-main"><div class="task-title ${t.done?"done-text":""}">${esc(t.title)}</div><div class="meta">${formatTime(t.time)}${t.repeat!=="none"?" · "+repeatLabel(t.repeat):""}${t.skipped?" · skipped today":""}</div></div><div class="actions"><button class="icon postpone" title="Postpone" aria-label="Postpone task">→</button><button class="icon edit" title="Edit task" aria-label="Edit task">⋮</button><button class="icon delete-task" title="Delete task permanently" aria-label="Delete ${esc(t.title)} permanently"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6m4-6v6M6 7l1 14h10l1-14M9 7V4h6v3"></path></svg></button></div>`;
   el.querySelector(".check").onclick=()=>setDone(t,date,!t.done);
   el.querySelector(".postpone").onclick=()=>openPostpone(t,date);
   el.querySelector(".edit").onclick=()=>openEdit(t);
+  el.querySelector(".delete-task").onclick=()=>deleteTask(t);
   container.appendChild(el);
 }
 function renderCalendar() {
