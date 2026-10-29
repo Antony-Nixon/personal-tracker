@@ -56,10 +56,20 @@
   <h2 id="modalTitle">Add task</h2><input type="hidden" id="editId">
   <label>Task</label><input id="title" required maxlength="100" placeholder="e.g. Gym">
   <div class="row"><div><label>Date</label><input id="date" type="date" required></div><div><label>Time</label><input id="time" type="time"></div></div>
-  <label>Repeat</label><select id="repeat"><option value="none">Does not repeat</option><option value="daily">Every day</option><option value="weekly">Every week</option><option value="monthly">Every month</option></select>
-  <div id="weeklyGoalField" class="goal-field" hidden><label for="weeklyTarget">Weekly session target <span class="optional">(optional)</span></label><input id="weeklyTarget" type="number" min="1" max="7" inputmode="numeric" placeholder="For example, 5"><small>For habits like gym, choose how many sessions you aim to complete each week.</small></div>
+  <label>Repeat</label><select id="repeat"><option value="none">Does not repeat</option><option value="daily">Every day</option><option value="interval">Every N days</option><option value="weekdays">Selected weekdays</option><option value="weekly_quota">N times per week</option><option value="monthly">Every month</option></select>
+  <div id="intervalField" class="goal-field" hidden><label for="intervalDays">Repeat every</label><div class="inline-input"><input id="intervalDays" type="number" min="1" max="365" inputmode="numeric" value="2"><span>days</span></div><small>2 means alternate days; 3 means every third day.</small></div>
+  <div id="weekdayField" class="goal-field" hidden><label>Days of the week</label><div class="weekday-picker" id="weekdayPicker"><label><input type="checkbox" value="1"> Mon</label><label><input type="checkbox" value="2"> Tue</label><label><input type="checkbox" value="3"> Wed</label><label><input type="checkbox" value="4"> Thu</label><label><input type="checkbox" value="5"> Fri</label><label><input type="checkbox" value="6"> Sat</label><label><input type="checkbox" value="0"> Sun</label></div><small>Choose one day for a task such as every Saturday, or several days.</small></div>
+  <div id="weeklyGoalField" class="goal-field" hidden><label for="weeklyTarget">Sessions per week</label><input id="weeklyTarget" type="number" min="1" max="7" inputmode="numeric" placeholder="For example, 5"><small>The score is based on weekly targets. Extra sessions do not cancel missed sessions in another week.</small></div>
+  <div id="monthlyField" class="goal-field" hidden><label for="monthDay">Day of month</label><input id="monthDay" type="number" min="1" max="31" inputmode="numeric"><small>For months without this day, the task appears on the last day of that month.</small></div>
+  <p class="schedule-preview muted" id="schedulePreview"></p>
   <div class="modal-actions"><button type="button" class="btn" id="cancelBtn">Cancel</button><button class="btn primary">Save task</button></div>
 </form></dialog>
+
+<dialog id="analyticsDialog"><div class="modal analytics-modal">
+  <div class="review-head"><div><h2 id="analyticsTitle">Habit analytics</h2><p class="muted" id="analyticsSchedule"></p></div><button class="icon" id="closeAnalytics" type="button" aria-label="Close analytics">×</button></div>
+  <div class="analytics-range"><label for="analyticsPreset">Period</label><select id="analyticsPreset"><option value="30">Last 30 days</option><option value="7">Last 7 days</option><option value="90">Last 90 days</option><option value="month">This month</option><option value="custom">Custom range</option></select><div class="row" id="analyticsCustomRange" hidden><input id="analyticsStart" type="date"><input id="analyticsEnd" type="date"></div></div>
+  <div class="analytics-stats" id="analyticsStats"></div><div class="analytics-bar"><div id="analyticsFill"></div></div><p class="muted analytics-note" id="analyticsNote"></p><div class="analytics-occurrences" id="analyticsOccurrences"></div>
+</div></dialog>
 
 <dialog id="postponeDialog"><form class="modal" id="postponeForm" method="dialog">
   <h2>Postpone task</h2><input type="hidden" id="postponeId"><input type="hidden" id="postponeOldDate">
@@ -73,6 +83,6 @@
 </div></dialog>
 
 <div class="toast" id="toast"></div>
-<script src="./config.js"></script><script src="./app.js"></script>
+<script src="./config.js"></script><script src="./recurrence.js"></script><script src="./app.js"></script>
 </body>
 </html>

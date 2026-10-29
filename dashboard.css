@@ -9,6 +9,7 @@
 .dash-stat span{font-size:11px;color:var(--muted)}
 .progress-list{display:grid;gap:8px}
 .progress-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px}
+.clickable-card{cursor:pointer}.clickable-card:hover,.clickable-card:focus{border-color:#a5b4fc;box-shadow:0 3px 12px #3730a312;outline:none}
 .progress-card-top{display:flex;align-items:center;gap:8px}
 .progress-task-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:15px}
 .progress-card-top .progress-task-name{margin-right:auto}
@@ -32,10 +33,12 @@
 .goal-field{margin-top:12px}
 .goal-field[hidden]{display:none}
 .goal-field small{display:block;color:var(--muted);font-size:12px;margin-top:6px}
+.inline-input{display:flex;align-items:center;gap:8px}.inline-input input{flex:1}.weekday-picker{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.weekday-picker label{margin:0;padding:8px 5px;border:1px solid var(--line);border-radius:9px;font-size:12px;text-align:center;font-weight:500}.weekday-picker input{width:auto;margin-right:3px}.schedule-preview{font-size:12px;margin:12px 0 0}
+.analytics-modal{max-height:min(88vh,720px);overflow:auto}.analytics-range{display:grid;gap:5px;margin:14px 0}.analytics-range label{margin:0}.analytics-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0}.analytics-stats div{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:10px;display:grid;gap:2px}.analytics-stats strong{font-size:19px}.analytics-stats span{font-size:11px;color:var(--muted)}.analytics-bar{height:8px;border-radius:999px;background:#e5e7eb;overflow:hidden}.analytics-bar div{height:100%;background:var(--good);transition:width .2s}.analytics-note{font-size:12px}.analytics-occurrences{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}.occurrence{font-size:11px;border-radius:999px;padding:5px 8px}.occurrence.complete{background:#dcfce7;color:#166534}.occurrence.missed{background:#fee2e2;color:#991b1b}
 .optional{color:var(--muted);font-weight:400}
 .calendar-toggle-wrap{display:flex;justify-content:flex-end;margin:16px 2px 0}
 .calendar-toggle{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--text);padding:9px 13px;font:inherit;cursor:pointer}
 .calendar-toggle:hover{background:#f3f4f6}
 .calendar-toggle svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 #calendarPanel[hidden]{display:none}
-@media(max-width:500px){.dashboard-summary{gap:6px}.dash-stat{padding:10px 8px}.dash-stat span{font-size:10px}.streak-pill{font-size:11px}}
+@media(max-width:500px){.dashboard-summary{gap:6px}.dash-stat{padding:10px 8px}.dash-stat span{font-size:10px}.streak-pill{font-size:11px}.weekday-picker{grid-template-columns:repeat(3,1fr)}.analytics-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
