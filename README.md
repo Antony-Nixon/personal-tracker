@@ -1,8 +1,24 @@
 # Daymark
 
-A calm, local-first daily planner for tasks, habits, recurring schedules, and progress review.
+> **A calmer way to keep your day moving.** ☀️
 
-Daymark is a browser-based progressive web app designed to make planning feel lightweight while still supporting recurring routines, completion history, streaks, analytics, calendar navigation, and optional push notifications.
+A local-first daily planner for tasks, habits, recurring schedules, and progress review.
+
+[![Built with vanilla JavaScript](https://img.shields.io/badge/built%20with-vanilla%20JavaScript-f7df1e?logo=javascript&logoColor=111)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Progressive Web App](https://img.shields.io/badge/app-progressive%20web%20app-5b4bdb)](https://web.dev/progressive-web-apps/)
+[![Privacy](https://img.shields.io/badge/data-local--first-2f855a)](#data-and-privacy)
+
+Daymark keeps planning lightweight while still supporting recurring routines, completion history, streaks, analytics, calendar navigation, and optional push notifications.
+
+## Why Daymark?
+
+Most task tools make a simple list feel like project management. Daymark focuses on a smaller loop:
+
+```text
+Plan → Do → Review → Repeat
+```
+
+The interface is intentionally quiet, local-first, and easy to use without an account.
 
 ## Highlights
 
@@ -63,6 +79,8 @@ config.js           Public runtime configuration
 icons/              Application icons
 ```
 
+The recurrence engine is kept separate from the UI so schedule rules, analytics, migrations, and calendar views share one source of truth.
+
 ## Data and privacy
 
 Tasks, history, and device identifiers are stored in the browser by default. Optional notification sync sends the configured task state and history to the configured API endpoint. Review that deployment and its privacy policy before enabling notifications.
@@ -71,7 +89,7 @@ Do not store passwords, secrets, financial information, or sensitive personal da
 
 ## Current status
 
-Daymark is an actively developed personal productivity project. The core local-first planner is usable; notification delivery and hosted sync depend on the separately configured worker service.
+The core local-first planner is usable. Notification delivery and hosted sync depend on the separately configured worker service.
 
 ## Roadmap
 
